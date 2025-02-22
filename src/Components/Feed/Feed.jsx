@@ -1,7 +1,7 @@
 import { useForm } from "react-hook-form";
 import {
   useGetPostByIdQuery,
-  useGetPostsQuery,
+  useSetPostMutation,
 } from "../../redux/features/api/baseapi";
 import PostCard from "../Layout/PostCard";
 
@@ -9,10 +9,13 @@ const Feed = () => {
   const { data: post, isLoading, isError, error } = useGetPostByIdQuery(1);
   // const { data: posts, isLoading, isError, error } = useGetPostsQuery();
   const { register, handleSubmit } = useForm();
+  const [setPost,{data:postData}] = useSetPostMutation();
 
   if (isLoading) return <p>Loading...</p>;
   if (isError) return <p>Error: {error.message}</p>;
-  const onSubmit = (data) => console.log(data);
+  const onSubmit = (data) => {
+    setPost(postData);
+  };
 
   return (
     <div>
